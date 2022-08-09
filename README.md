@@ -1,2 +1,32 @@
-# lingo-backend
-The backend code base of lingo.
+# Lingo-backend
+
+The backend code base for lingo. 
+
+## What is Lingo?
+
+Lingo is an app that let's users communicate with one other without having knowledge of the each other's language.
+It tries to break the language barrier among humans. It does this by using instant translation. This prevents the user
+from going back and forth to google translate.
+
+
+## Technologies
+- **express**: This will be used to handle regular http requests.
+
+- **socket.io**: This is used for real-time communication.
+
+- **MongoDB**: Database to store users message.
+
+- **Redis**: Database to store user sessions.
+
+- **[google-translate-api](https://www.npmjs.com/package/@vitalets/google-translate-api)**: Node implementation of google translate api.
+
+## Tasks
+- [ ] Setup environments
+
+  - [ ] setup typescript environment for express and socketio.
+  - [ ] setup database mongodb and redis via docker.
+  - [ ] Run a simple test app.
+
+- [ ] Create database schema for users.
+- [ ] Implement login functionality via [passport.js](https://www.passportjs.org/)
+- [ ] Create events via socket.io to handle communication with the client.
