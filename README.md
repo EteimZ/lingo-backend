@@ -4,9 +4,9 @@ The backend code base for lingo.
 
 ## What is Lingo?
 
-Lingo is an app that let's users communicate with one other without having knowledge of the each other's language.
+Lingo is an app that let's users communicate with one another without having knowledge of the each other's language.
 It tries to break the language barrier among humans. It does this by using instant translation. This prevents the user
-from going back and forth to google translate.
+from going back and forth to translate messages.
 
 ![lingo drawio](https://user-images.githubusercontent.com/45427673/183635721-f5eaa7be-4d63-4c5c-be4a-da9db33ae57e.png)
 
