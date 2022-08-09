@@ -8,6 +8,8 @@ Lingo is an app that let's users communicate with one other without having knowl
 It tries to break the language barrier among humans. It does this by using instant translation. This prevents the user
 from going back and forth to google translate.
 
+![lingo drawio](https://user-images.githubusercontent.com/45427673/183635721-f5eaa7be-4d63-4c5c-be4a-da9db33ae57e.png)
+
 
 ## Technologies
 - **express**: This will be used to handle regular http requests.
@@ -19,6 +21,8 @@ from going back and forth to google translate.
 - **Redis**: Database to store user sessions.
 
 - **[google-translate-api](https://www.npmjs.com/package/@vitalets/google-translate-api)**: Node implementation of google translate api.
+
+Figma design can be found [here](https://www.figma.com/file/K5Np072jExRFXnq4WhSjtZ/Lingo?node-id=0%3A1) by [Lois Dagana](https://www.behance.net/b3a78fad)
 
 ## Tasks
 - [ ] Setup environments
