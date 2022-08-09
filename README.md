@@ -22,7 +22,7 @@ from going back and forth to translate messages.
 
 - **[google-translate-api](https://www.npmjs.com/package/@vitalets/google-translate-api)**: Node implementation of google translate api.
 
-Figma design can be found [here](https://www.figma.com/file/K5Np072jExRFXnq4WhSjtZ/Lingo?node-id=0%3A1) by [Lois Dagana](https://www.behance.net/b3a78fad)
+Figma design can be found [here](https://www.figma.com/file/K5Np072jExRFXnq4WhSjtZ/Lingo?node-id=0%3A1) by **[Lois Dagana](https://loisdagana.netlify.app/)**
 
 ## Tasks
 - [ ] Setup environments
