@@ -1,0 +1,32 @@
+{
+  "name": "lingo-backend",
+  "version": "1.0.0",
+  "description": "Backend code for lingo",
+  "main": "index.ts",
+  "scripts": {
+    "start": "ts-node-dev ./index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EteimZ/lingo-backend.git"
+  },
+  "keywords": [
+    "Language"
+  ],
+  "author": "Eteims",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EteimZ/lingo-backend/issues"
+  },
+  "homepage": "https://github.com/EteimZ/lingo-backend#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^18.6.5",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
