@@ -10,7 +10,7 @@ services:
     volumes:
       - ./:/app
     environment:
-      - MONGODB_CONNSTRING=mongodb://lingo:password@mongo
+      - MONGODB_CONNSTRING=mongodb://lingo:password@mongo/lingoDB
 
   mongo:
     image: mongo:4.4.15
@@ -19,9 +19,11 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=lingo
       - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=lingo_db
     volumes:
       - lingodb:/data/db
       - lingodb_config:/data/configdb
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
 
 volumes:
   lingodb:

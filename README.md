@@ -24,6 +24,16 @@ from going back and forth to translate messages.
 
 Figma design can be found [here](https://www.figma.com/file/K5Np072jExRFXnq4WhSjtZ/Lingo?node-id=0%3A1) by **[Lois Dagana](https://loisdagana.netlify.app/)**
 
+
+## Usage
+
+In other to run the app, you have to have **docker** installed.
+
+```bash
+docker compose up -d # or docker-compose up -d
+```
+
+
 ## Tasks
 - [ ] Setup environments
 
