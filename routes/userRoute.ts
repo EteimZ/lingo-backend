@@ -1,17 +1,34 @@
 import { Router } from "express";
-import { getUser, getUsers, createUser, deleteUser, updateUser  } from "../controllers/userController";
+import { body, validationResult } from "express-validator";
+import {
+  getUser,
+  getUsers,
+  signupUser,
+  deleteUser,
+  updateUser,
+  loginUser,
+} from "../controllers/userController";
 
-const userRouter = Router()
+const userRouter = Router();
 
+userRouter.get("/", getUsers);
 
-userRouter.get('/', getUsers)
+userRouter.get("/:id", getUser);
 
-userRouter.get('/:id', getUser)
+userRouter.post(
+  "/signup",
+  body("username").isAlphanumeric().isLength({ min: 10 }),
+  body("password").isStrongPassword(),
+  signupUser
+);
 
-userRouter.post('/', createUser)
+userRouter.post(
+    "/login",
+    loginUser
+  );
 
-userRouter.delete('/:id', deleteUser)
+userRouter.delete("/:id", deleteUser);
 
-userRouter.patch('/:id', updateUser)
+userRouter.patch("/:id", updateUser);
 
 export default userRouter;

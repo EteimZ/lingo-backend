@@ -1,9 +1,15 @@
 import express, {Application, Request, Response} from 'express';
 import userRouter  from "./routes/userRoute";
 import { connect } from 'mongoose';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
 
 const app: Application = express()
-const port = 3000
+const port = process.env.PORT
+
+
 
 app.use(express.json())
 
@@ -14,7 +20,8 @@ app.get("/", (req: Request, res: Response) => {
 })
 
 async function run(){
-    await connect("mongodb://lingo_user:lingo_pwd@mongo/lingo_db")
+
+    await connect(`${process.env.MONGO_URI}`)
     console.log("Connected to database")
     app.listen(port, () => {
         console.log(`Server running on port ${port} `)
