@@ -1,6 +1,49 @@
 import { User } from "../models/userModel";
 import { Request, Response } from "express";
-import mongoose, { Types } from "mongoose";
+import { Types } from "mongoose";
+
+import * as jwt from "jsonwebtoken";
+
+const createToken = (_id : Types.ObjectId) => {
+    return jwt.sign({_id}, `${process.env.SECRET}`, { expiresIn: '3d' })
+}
+
+
+// signup user 
+const signupUser = async (req: Request, res: Response ) => {
+    const { username, password, lang } = req.body
+    
+    try {
+        const user = await User.signup(username, password, lang);
+        
+        const token = createToken(user._id)
+
+        res.status(200).json({username, token})
+    } catch (e) {
+        res.status(400).json({ error: e })
+    }   
+}
+
+
+// login user
+const loginUser = async (req: Request, res: Response ) => {
+
+    const { username, password} = req.body;
+
+    try {
+        const user = await User.login(username, password)
+    
+        // create a token
+        const token = createToken(user._id)
+    
+        res.status(200).json({username, token})
+      } catch (error) {
+        res.status(400).json({error: error})
+      }
+
+
+}
+
 
 
 // get all users
@@ -27,19 +70,6 @@ const getUser = async (req: Request, res: Response ) => {
     }
 
     res.status(200).json(user)
-}
-
-
-// create user 
-const createUser = async (req: Request, res: Response ) => {
-    const { username, password, lang } = req.body
-
-    try {
-        const user = await User.create({ username, password, lang})
-        res.status(200).json(user)
-    } catch (e) {
-        res.status(400).json({ error: e })
-    }   
 }
 
 
@@ -85,8 +115,9 @@ const updateUser = async (req: Request, res: Response ) => {
 export {
     getUser,
     getUsers,
-    createUser,
+    signupUser,
     deleteUser,
-    updateUser
+    updateUser,
+    loginUser
 
 }

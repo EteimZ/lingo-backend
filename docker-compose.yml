@@ -10,7 +10,7 @@ services:
     volumes:
       - ./:/app
     environment:
-      - MONGODB_CONNSTRING=mongodb://lingo:password@mongo/lingoDB
+      - MONGODB_CONNSTRING=mongodb://lingo:password@mongo/
 
   mongo:
     image: mongo:4.4.15
