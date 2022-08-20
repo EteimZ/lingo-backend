@@ -29,6 +29,16 @@ Figma design can be found [here](https://www.figma.com/file/K5Np072jExRFXnq4WhSj
 
 In other to run the app, you have to have **docker** installed.
 
+Create a **.env** in the main directory then copy and paste the text below.
+
+```
+MONGO_URI="mongodb://lingo_user:lingo_pwd@mongo/lingo_db"
+PORT=3000
+SECRET="4274fffc957f5a2f5dabe93ea26c3b6c5ed95e9aac8111e2614d7adcb809986a"
+```
+
+The **SECRET** variable can be changed to any value you desire but its safe to keep it random.
+
 ```bash
 docker compose up -d # or docker-compose up -d
 ```
