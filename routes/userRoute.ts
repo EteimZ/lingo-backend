@@ -5,9 +5,10 @@ import {
   getUsers,
   signupUser,
   deleteUser,
-  updateUser,
   loginUser,
+  updateLangandGroup,
 } from "../controllers/userController";
+import requireAuth from "../middleware/requireAuth";
 
 const userRouter = Router();
 
@@ -17,18 +18,17 @@ userRouter.get("/:id", getUser);
 
 userRouter.post(
   "/signup",
-  body("username").isAlphanumeric().isLength({ min: 10 }),
-  body("password").isStrongPassword(),
+  body("username").isAlphanumeric().isLength({ min: 5 }),
+  body("password"),
   signupUser
 );
 
 userRouter.post(
-    "/login",
-    loginUser
-  );
+  "/login", loginUser
+);
 
-userRouter.delete("/:id", deleteUser);
+userRouter.delete("/", requireAuth, deleteUser);
 
-userRouter.patch("/:id", updateUser);
+userRouter.patch("/lang", requireAuth, updateLangandGroup);
 
 export default userRouter;
