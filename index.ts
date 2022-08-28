@@ -2,6 +2,8 @@ import express, {Application, Request, Response} from 'express';
 import userRouter  from "./routes/userRoute";
 import { connect } from 'mongoose';
 import * as dotenv from 'dotenv';
+import * as cors from 'cors';
+
 
 dotenv.config();
 
@@ -12,6 +14,8 @@ const port = process.env.PORT
 
 
 app.use(express.json())
+app.use(cors())
+
 
 app.use('/api/users', userRouter);
 
@@ -25,7 +29,7 @@ async function run(){
     console.log("Connected to database")
     app.listen(port, () => {
         console.log(`Server running on port ${port} `)
-    })     
+    })
 }
 
 try {
