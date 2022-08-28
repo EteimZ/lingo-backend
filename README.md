@@ -53,9 +53,63 @@ API routes for basic crud operations:
 
 **GET 127.0.0.1:9000/**
 
-*Server response:*
+*Response:*
 ```json
 {"msg":"Lingo up"}
+```
+
+### Get users route:
+
+**GET 127.0.0.1:9000/api/users/**
+
+*Response:*
+```json
+ [
+   {
+    "_id": "630aaff5960b85d32420f516",
+    "username": "Eteims",
+    "friends": [],
+    "groups": [
+      "French",
+      "Spanish"
+    ],
+    "createdAt": "2022-08-27T23:59:49.972Z",
+    "updatedAt": "2022-08-28T00:02:17.882Z",
+    "__v": 0,
+    "lang": "English"
+  },
+  {
+    "_id": "630ab174044d4c24d5e27d36",
+    "username": "Alice",
+    "friends": [],
+    "groups": [],
+    "createdAt": "2022-08-28T00:06:12.227Z",
+    "updatedAt": "2022-08-28T00:06:12.227Z",
+    "__v": 0
+  },
+ ]
+```
+
+### Get user route:
+
+**GET 127.0.0.1:9000/api/users/630aaff5960b85d32420f516**
+
+*Response:*
+
+```json
+{
+  "_id": "630aaff5960b85d32420f516",
+  "username": "Eteims",
+  "friends": [],
+  "groups": [
+    "French",
+    "Spanish"
+  ],
+  "createdAt": "2022-08-27T23:59:49.972Z",
+  "updatedAt": "2022-08-28T00:02:17.882Z",
+  "__v": 0,
+  "lang": "English"
+}
 ```
 
 ### Signup route:
@@ -66,8 +120,7 @@ API routes for basic crud operations:
 ```json
 {
     "username": "Alice",
-    "password": "alice123",
-    "lang": "English"
+    "password": "alice123"
 }
 ```
 
@@ -82,6 +135,31 @@ API routes for basic crud operations:
     "password": "alice123"
 }
 ```
+
+### Add lang route:
+
+**PATCH 127.0.0.1:9000/api/users/lang**
+
+*Request body:*
+```json
+{
+    "lang": "English",
+    "groups": ["Spanish", "Igbo", "French"]
+}
+```
+
+### Delete route:
+
+**DELETE 127.0.0.1:9000/api/users/**
+
+Note: User most be signed in!
+
+*Response:*
+```json
+{ "detail": "User successfully deleted" }
+```
+
+
 
 ## Tasks
 - [x] Setup environments
