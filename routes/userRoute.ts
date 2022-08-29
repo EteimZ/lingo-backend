@@ -1,7 +1,10 @@
 import { Router } from "express";
 import { body, validationResult } from "express-validator";
 import {
+  addFriend,
   getUser,
+  getFriends,
+  getGroups,
   getUsers,
   signupUser,
   deleteUser,
@@ -13,6 +16,11 @@ import requireAuth from "../middleware/requireAuth";
 const userRouter = Router();
 
 userRouter.get("/", getUsers);
+
+userRouter.get("/friends", requireAuth, getFriends);
+
+userRouter.get("/groups", requireAuth, getGroups);
+
 
 userRouter.get("/:id", getUser);
 
@@ -30,5 +38,7 @@ userRouter.post(
 userRouter.delete("/", requireAuth, deleteUser);
 
 userRouter.patch("/lang", requireAuth, updateLangandGroup);
+
+userRouter.patch("/:friend", requireAuth, addFriend);
 
 export default userRouter;

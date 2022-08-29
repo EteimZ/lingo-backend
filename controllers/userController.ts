@@ -95,7 +95,7 @@ const deleteUser = async (req: any, res: Response) => {
 // update lang and group
 const updateLangandGroup = async (req: any, res: Response) => {
 
-  const { lang , group } = req.body
+  const { lang , groups } = req.body
 
   if (req.user == null) {
     return res.status(400).json({ error: "Id not valid" });
@@ -109,7 +109,7 @@ const updateLangandGroup = async (req: any, res: Response) => {
     { _id: req.user.id },
     {
       lang, 
-      group
+      groups
     }
   );
 
@@ -120,11 +120,84 @@ const updateLangandGroup = async (req: any, res: Response) => {
   res.status(200).json(user);
 };
 
-// add friend
+// update lang and group
+const addFriend = async (req: any, res: Response) => {
+
+  const { friend } = req.params
+
+  if (req.user == null) {
+    return res.status(400).json({ error: "Id not valid" });
+  }
+
+  if (!Types.ObjectId.isValid(req.user.id)) {
+    return res.status(400).json({ error: "Id not valid" });
+  }
+
+  const user = await User.findOneAndUpdate(
+    { _id: req.user.id },
+    {
+      $push : {friends: friend}
+    }
+  );
+
+  if (!user) {
+    return res.status(404).json({ error: "No such User" });
+  }
+
+  res.status(200).json(user);
+};
+
+
 // get list of friends
 
+const getFriends = async (req: any, res: Response) => {
+
+  if (req.user == null) {
+    return res.status(400).json({ error: "Id not valid" });
+  }
+
+  if (!Types.ObjectId.isValid(req.user.id)) {
+    return res.status(400).json({ error: "Id not valid" });
+  }
+
+  const user = await User.find({ _id: req.user.id }, "friends").exec();
+
+  if (!user) {
+    return res.status(404).json({ error: "No such User" });
+  }
+
+  res.status(200).json(user);
+};
+
+
+// get list of groups of user
+const getGroups = async (req: any, res: Response) => {
+
+  if (req.user == null) {
+    return res.status(400).json({ error: "Id not valid" });
+  }
+
+  if (!Types.ObjectId.isValid(req.user.id)) {
+    return res.status(400).json({ error: "Id not valid" });
+  }
+
+
+  const user = await User.find({ _id: req.user.id }, "groups").exec();
+  
+
+  if (!user) {
+    return res.status(404).json({ error: "No such User" });
+  }
+
+  res.status(200).json(user);
+};
+
+
 export {
+  addFriend,
   getUser,
+  getFriends,
+  getGroups,
   getUsers,
   signupUser,
   loginUser,
