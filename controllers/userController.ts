@@ -15,7 +15,7 @@ const signupUser = async (req: Request, res: Response) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  
+
   const { username, password } = req.body;
 
 
@@ -25,7 +25,7 @@ const signupUser = async (req: Request, res: Response) => {
 
     const token = createToken(user._id);
 
-    res.status(200).json({ username, token });
+    res.status(200).json({ username, token , id: user._id });
   } catch (e) {
     res.status(400).json({ error: "User signup failed" });
   }
@@ -41,7 +41,7 @@ const loginUser = async (req: Request, res: Response) => {
     // create a token
     const token = createToken(user._id);
 
-    res.status(200).json({ username, token });
+    res.status(200).json({ username, token , id: user._id});
   } catch (error) {
     res.status(400).json({ error: "Login failed" });
   }
@@ -108,7 +108,7 @@ const updateLangandGroup = async (req: any, res: Response) => {
   const user = await User.findOneAndUpdate(
     { _id: req.user.id },
     {
-      lang, 
+      lang,
       groups
     }
   );
@@ -183,7 +183,7 @@ const getGroups = async (req: any, res: Response) => {
 
 
   const user = await User.find({ _id: req.user.id }, "groups").exec();
-  
+
 
   if (!user) {
     return res.status(404).json({ error: "No such User" });
