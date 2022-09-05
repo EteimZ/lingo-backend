@@ -18,14 +18,12 @@ const signupUser = async (req: Request, res: Response) => {
 
   const { username, password } = req.body;
 
-
-
   try {
     const user = await User.signup(username, password);
 
     const token = createToken(user._id);
 
-    res.status(200).json({ username, token , id: user._id });
+    res.status(200).json({ username, token, id: user._id });
   } catch (e) {
     res.status(400).json({ error: "User signup failed" });
   }
@@ -41,7 +39,7 @@ const loginUser = async (req: Request, res: Response) => {
     // create a token
     const token = createToken(user._id);
 
-    res.status(200).json({ username, token , id: user._id});
+    res.status(200).json({ username, token, id: user._id });
   } catch (error) {
     res.status(400).json({ error: "Login failed" });
   }
@@ -49,21 +47,21 @@ const loginUser = async (req: Request, res: Response) => {
 
 // get all users
 const getUsers = async (req: Request, res: Response) => {
-  const users = await User.find();
+  const users = await User.find().exec();
 
   res.status(200).json(users);
 };
 
 // get one user
 const getUser = async (req: Request, res: Response) => {
-  const { id } = req.params;
-
+  const { username } = req.params;
+  /* 
   if (!Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "Id not valid" });
-  }
+  } */
 
-  const user = await User.findById(id);
-
+  const user = await User.findOne({ username: username }).exec();
+  
   if (!user) {
     return res.status(404).json({ error: "No such User" });
   }
@@ -82,7 +80,7 @@ const deleteUser = async (req: any, res: Response) => {
     return res.status(400).json({ error: "Id not valid" });
   }
 
-  const user = await User.findOneAndDelete({ _id: req.user.id });
+  const user = await User.findOneAndDelete({ _id: req.user.id }).exec();
 
   if (!user) {
     return res.status(404).json({ error: "No such User" });
@@ -91,11 +89,9 @@ const deleteUser = async (req: any, res: Response) => {
   res.status(200).json({ detail: "User successfully deleted" });
 };
 
-
 // update lang and group
 const updateLangandGroup = async (req: any, res: Response) => {
-
-  const { lang , groups } = req.body
+  const { lang, groups } = req.body;
 
   if (req.user == null) {
     return res.status(400).json({ error: "Id not valid" });
@@ -109,9 +105,10 @@ const updateLangandGroup = async (req: any, res: Response) => {
     { _id: req.user.id },
     {
       lang,
-      groups
-    }
-  );
+      groups,
+    },
+    { new: true }
+  ).exec();
 
   if (!user) {
     return res.status(404).json({ error: "No such User" });
@@ -122,8 +119,7 @@ const updateLangandGroup = async (req: any, res: Response) => {
 
 // update lang and group
 const addFriend = async (req: any, res: Response) => {
-
-  const { friend } = req.params
+  const { friend } = req.params;
 
   if (req.user == null) {
     return res.status(400).json({ error: "Id not valid" });
@@ -133,25 +129,26 @@ const addFriend = async (req: any, res: Response) => {
     return res.status(400).json({ error: "Id not valid" });
   }
 
+  const friendDb = await User.findOne({ username: friend }).exec();
+
+  if (!friendDb) {
+    return res.status(404).json({ error: "Friend doesn't exist." });
+  }
+
   const user = await User.findOneAndUpdate(
     { _id: req.user.id },
     {
-      $push : {friends: friend}
-    }
-  );
-
-  if (!user) {
-    return res.status(404).json({ error: "No such User" });
-  }
+      $push: { friends: friend },
+    },
+    { new: true }
+  ).exec();
 
   res.status(200).json(user);
 };
 
-
 // get list of friends
 
 const getFriends = async (req: any, res: Response) => {
-
   if (req.user == null) {
     return res.status(400).json({ error: "Id not valid" });
   }
@@ -169,10 +166,8 @@ const getFriends = async (req: any, res: Response) => {
   res.status(200).json(user);
 };
 
-
 // get list of groups of user
 const getGroups = async (req: any, res: Response) => {
-
   if (req.user == null) {
     return res.status(400).json({ error: "Id not valid" });
   }
@@ -181,9 +176,7 @@ const getGroups = async (req: any, res: Response) => {
     return res.status(400).json({ error: "Id not valid" });
   }
 
-
   const user = await User.find({ _id: req.user.id }, "groups").exec();
-
 
   if (!user) {
     return res.status(404).json({ error: "No such User" });
@@ -191,7 +184,6 @@ const getGroups = async (req: any, res: Response) => {
 
   res.status(200).json(user);
 };
-
 
 export {
   addFriend,

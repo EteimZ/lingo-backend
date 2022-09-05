@@ -15,14 +15,14 @@ import requireAuth from "../middleware/requireAuth";
 
 const userRouter = Router();
 
-userRouter.get("/", getUsers);
+userRouter.get("/", requireAuth, getUsers);
 
 userRouter.get("/friends", requireAuth, getFriends);
 
 userRouter.get("/groups", requireAuth, getGroups);
 
 
-userRouter.get("/:id", getUser);
+userRouter.get("/:username", requireAuth, getUser);
 
 userRouter.post(
   "/signup",
