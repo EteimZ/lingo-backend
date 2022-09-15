@@ -71,7 +71,7 @@ const getUser = async (req: Request, res: Response) => {
 
 //  delete user
 
-const deleteUser = async (req: any, res: Response) => {
+const deleteUser = async (req: Request, res: Response) => {
   if (req.user == null) {
     return res.status(400).json({ error: "Id not valid" });
   }
@@ -90,7 +90,7 @@ const deleteUser = async (req: any, res: Response) => {
 };
 
 // update lang and group
-const updateLangandGroup = async (req: any, res: Response) => {
+const updateLangandGroup = async (req: Request, res: Response) => {
   const { lang, groups } = req.body;
 
   if (req.user == null) {
@@ -118,7 +118,7 @@ const updateLangandGroup = async (req: any, res: Response) => {
 };
 
 // update lang and group
-const addFriend = async (req: any, res: Response) => {
+const addFriend = async (req: Request, res: Response) => {
   const { friend } = req.params;
 
   if (req.user == null) {
@@ -148,7 +148,7 @@ const addFriend = async (req: any, res: Response) => {
 
 // get list of friends
 
-const getFriends = async (req: any, res: Response) => {
+const getFriends = async (req: Request, res: Response) => {
   if (req.user == null) {
     return res.status(400).json({ error: "Id not valid" });
   }
@@ -167,7 +167,7 @@ const getFriends = async (req: any, res: Response) => {
 };
 
 // get list of groups of user
-const getGroups = async (req: any, res: Response) => {
+const getGroups = async (req: Request, res: Response) => {
   if (req.user == null) {
     return res.status(400).json({ error: "Id not valid" });
   }

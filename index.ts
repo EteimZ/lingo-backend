@@ -12,7 +12,11 @@ dotenv.config();
 
 const app: Application = express();
 const httpServer = createServer(app);
-const io = new Server(httpServer); 
+const io = new Server(httpServer, {
+    cors: {
+      origin: "*",
+    },
+  });
 
 const port = process.env.PORT
 
@@ -27,10 +31,16 @@ app.get("/", (req: Request, res: Response) => {
     res.json({"msg": "Lingo up"})
 })
 
+
+io.on("connection", (socket) => {
+    console.log("Socket connected.")
+})
+
+
 async function run(){
     await connect(`${process.env.MONGO_URI}`)
     console.log("Connected to database")
-    
+
     httpServer.listen(port, () => {
         console.log(`Server running on port ${port} `)
     })

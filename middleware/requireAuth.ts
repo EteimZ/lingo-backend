@@ -1,10 +1,10 @@
 import * as jwt from "jsonwebtoken";
 import {  User } from "../models/userModel";
 
-import { Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 
 
-const requireAuth = async (req: any, res: Response, next: NextFunction) => {
+const requireAuth = async (req: Request , res: Response, next: NextFunction) => {
     const { authorization } = req.headers
 
     if (!authorization ){
@@ -19,7 +19,7 @@ const requireAuth = async (req: any, res: Response, next: NextFunction) => {
         req.user = await User.findOne({ _id }).select('_id');
         next();
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.status(401).json({error: 'Request is not authorized'})
     }
 }
