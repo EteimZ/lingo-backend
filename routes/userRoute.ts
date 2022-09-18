@@ -1,34 +1,44 @@
 import { Router } from "express";
 import { body, validationResult } from "express-validator";
 import {
+  addFriend,
   getUser,
+  getFriends,
+  getGroups,
   getUsers,
   signupUser,
   deleteUser,
-  updateUser,
   loginUser,
+  updateLangandGroup,
 } from "../controllers/userController";
+import requireAuth from "../middleware/requireAuth";
 
 const userRouter = Router();
 
-userRouter.get("/", getUsers);
+userRouter.get("/", requireAuth, getUsers);
 
-userRouter.get("/:id", getUser);
+userRouter.get("/friends", requireAuth, getFriends);
+
+userRouter.get("/groups", requireAuth, getGroups);
+
+
+userRouter.get("/:username", requireAuth, getUser);
 
 userRouter.post(
   "/signup",
-  body("username").isAlphanumeric().isLength({ min: 10 }),
-  body("password").isStrongPassword(),
+  body("username").isAlphanumeric().isLength({ min: 5 }),
+  body("password"),
   signupUser
 );
 
 userRouter.post(
-    "/login",
-    loginUser
-  );
+  "/login", loginUser
+);
 
-userRouter.delete("/:id", deleteUser);
+userRouter.delete("/", requireAuth, deleteUser);
 
-userRouter.patch("/:id", updateUser);
+userRouter.patch("/lang", requireAuth, updateLangandGroup);
+
+userRouter.patch("/:friend", requireAuth, addFriend);
 
 export default userRouter;
