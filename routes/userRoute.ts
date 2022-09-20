@@ -10,6 +10,7 @@ import {
   deleteUser,
   loginUser,
   updateLangandGroup,
+  removeFriend,
 } from "../controllers/userController";
 import requireAuth from "../middleware/requireAuth";
 
@@ -34,6 +35,9 @@ userRouter.post(
 userRouter.post(
   "/login", loginUser
 );
+
+
+userRouter.delete("/remove/:friend", requireAuth, removeFriend);
 
 userRouter.delete("/", requireAuth, deleteUser);
 
