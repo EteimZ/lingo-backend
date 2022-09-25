@@ -146,6 +146,37 @@ const addFriend = async (req: Request, res: Response) => {
   res.status(200).json(user);
 };
 
+
+// update lang and group
+const removeFriend = async (req: Request, res: Response) => {
+  const { friend } = req.params;
+
+  if (req.user == null) {
+    return res.status(400).json({ error: "Id not valid" });
+  }
+
+  if (!Types.ObjectId.isValid(req.user.id)) {
+    return res.status(400).json({ error: "Id not valid" });
+  }
+
+  const friendDb = await User.findOne({ username: friend }).exec();
+
+  if (!friendDb) {
+    return res.status(404).json({ error: "Friend doesn't exist." });
+  } 
+
+  const user = await User.findOneAndUpdate(
+    { _id: req.user.id },
+    {
+      $pullAll: { friends: [friend] },
+    },
+    { new: true }
+  ).exec();
+
+  res.status(200).json(user);
+};
+
+
 // get list of friends
 
 const getFriends = async (req: Request, res: Response) => {
@@ -195,4 +226,5 @@ export {
   loginUser,
   deleteUser,
   updateLangandGroup,
+  removeFriend,
 };
